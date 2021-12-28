@@ -1,11 +1,7 @@
-#' Title
-#'
-#' @return
-#'
-#'
-#' @examples
+library(magrittr)
+
 read_data_ch <- function() {
-  fixed <- readxl::read_excel(path = "Holidays_CH.xlsx", sheet = 1) %>%
+  fixed <- readxl::read_excel(path = "~/GitHub/Holidays_CH.xlsx", sheet = 1) %>%
     tidyr::pivot_longer(cols = - Datum,
                         names_to = "level",
                         values_to = "holiday") %>%
@@ -24,7 +20,7 @@ read_data_ch <- function() {
     dplyr::ungroup() %>%
     dplyr::select(-Datum)
 
-  easter <- readxl::read_excel(path = "Holidays_CH.xlsx", sheet = 2) %>%
+  easter <- readxl::read_excel(path = "~/GitHub/Holidays_CH.xlsx", sheet = 2) %>%
     tidyr::pivot_longer(cols = - Datum,
                         names_to = "level",
                         values_to = "holiday") %>%
@@ -43,3 +39,8 @@ read_data_ch <- function() {
 
   list(fixed, easter)
 }
+
+fixed <- read_data_ch()[[1]]
+eastern <- read_data_ch()[[2]]
+
+usethis::use_data(fixed, eastern, internal = TRUE, overwrite = TRUE)

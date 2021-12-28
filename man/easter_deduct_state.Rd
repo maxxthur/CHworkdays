@@ -4,7 +4,7 @@
 \alias{easter_deduct_state}
 \title{Title}
 \usage{
-easter_deduct_state(eastern)
+easter_deduct_state(eastern_ext)
 }
 \arguments{
 \item{eastern}{}

@@ -32,8 +32,10 @@ workdays <- function(Y, state_level = FALSE) {
       dplyr::anti_join(fixed_fed, by = "date") %>%
       dplyr::anti_join(eastern_ded_fed, by = "date") %>%
       dplyr::mutate(year = lubridate::year(date),
-             month = lubridate::month(date),
-             day = lubridate::day(date)) %>%
+                    month = lubridate::month(date),
+                    week = lubridate::week(date),
+                    quarter = lubridate::quarter(date),
+                    day = lubridate::day(date)) %>%
       dplyr::distinct()
 
   } else {
@@ -49,6 +51,8 @@ workdays <- function(Y, state_level = FALSE) {
       dplyr::anti_join(eastern_ded_state, by = c("date", "level")) %>%
       dplyr::mutate(year = lubridate::year(date),
                     month = lubridate::month(date),
+                    week = lubridate::week(date),
+                    quarter = lubridate::quarter(date),
                     day = lubridate::day(date)) %>%
       dplyr::distinct()
   }
@@ -83,8 +87,33 @@ holidays <- function(Y, state_level = FALSE) {
                    easter_deduct_state(eastern = gauss_easter(Y))) %>%
     dplyr::mutate(year = lubridate::year(date),
                   month = lubridate::month(date),
+                  week = lubridate::week(date),
+                  quarter = lubridate::quarter(date),
                   day = lubridate::day(date)) %>%
     dplyr::distinct()
 
   }
+}
+
+#' Title
+#'
+#' @param Y
+#'
+#' @return
+#' @export
+#'
+#' @examples
+federal_workdays_weighted <- function(Y) {
+  workdays(Y, state_level = T) %>%
+    dplyr::group_by(date) %>%
+    dplyr::count() %>%
+    dplyr::mutate(level = "federal",
+                  weighted_workdays = n/26) %>%
+    dplyr::select(date, weighted_workdays, level) %>%
+    dplyr::ungroup() %>%
+    dplyr::mutate(year = lubridate::year(date),
+                  month = lubridate::month(date),
+                  week = lubridate::week(date),
+                  quarter = lubridate::quarter(date),
+                  day = lubridate::day(date))
 }

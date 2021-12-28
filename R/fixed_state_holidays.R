@@ -7,7 +7,7 @@
 #'
 #' @examples
 fixed_state_holidays <- function(Y) {
-  state_hols <- read_data_ch()[[1]] %>%
+  state_hols <- fixed %>%
     dplyr::filter(!federal_holiday & holiday)
 
   states_years <- expand.grid(level = unique(state_hols$level), year = Y)

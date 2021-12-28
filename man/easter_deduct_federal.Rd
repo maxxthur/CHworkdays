@@ -4,7 +4,7 @@
 \alias{easter_deduct_federal}
 \title{Title}
 \usage{
-easter_deduct_federal(eastern)
+easter_deduct_federal(eastern_ext)
 }
 \arguments{
 \item{eastern}{}

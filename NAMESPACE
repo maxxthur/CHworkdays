@@ -2,6 +2,7 @@
 
 export("%>%")
 export(easter_deduct_state)
+export(federal_workdays_weighted)
 export(holidays)
 export(workdays)
 importFrom(magrittr,"%>%")
